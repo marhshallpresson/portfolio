@@ -12,7 +12,7 @@ export const profile = {
   oneLiner: "I'm Marshall Presson, a software engineer building web and mobile apps, payment integrations and creator tools.",
   headline: "I ship web and mobile products where the payment flow can't fail.",
   intro:
-    "Full-stack engineer with 3+ years shipping payment flows, marketplaces and creator tools with React, Node.js, Python and Flutter. Lead Developer at TipStack (Solana creator payments). Open to full-time and contract roles, remote.",
+    "Full-stack and mobile software engineer with 3+ years shipping payment flows, marketplaces and creator tools. Lead Developer at TipStack (Solana creator payments). Open to full-time and contract roles, remote.",
   summary:
     "Full-stack engineer with 3+ years shipping web and cross-platform products: creator payments, e-commerce, service marketplaces and business platforms. I turn business requirements into working user journeys, integrate the services that make them real (Paystack, Stripe, OAuth2, Solana wallets), and care about debugging, maintainability and clear communication.",
   about: [

@@ -24,7 +24,7 @@ export default function Resume() {
         <header className="flex flex-wrap items-end justify-between gap-6 border-b-2 border-text pb-5">
           <div>
             <h1 className="text-[2.4rem] font-bold leading-none tracking-[-0.04em]">{profile.name}</h1>
-            <p className="mt-2 text-[15px] font-medium text-accent">{profile.role} · React · Node.js · Python · Flutter</p>
+            <p className="mt-2 text-[15px] font-medium text-accent">{profile.role}</p>
           </div>
           <div className="text-right text-[12.5px] leading-6 text-muted">
             <p>{profile.email}</p>
