@@ -41,6 +41,7 @@ export const profile = {
     { label: "Open-source on GitHub", href: "https://github.com/marhshallpresson" },
   ],
   booking: "https://cal.com/marshallpresson",
+  tip: "https://tipstack.fun/mobot",
   cvFile: "/Marshall-Presson-CV.pdf",
   socials: [
     { label: "LinkedIn", href: "https://www.linkedin.com/in/marshall-presson/", handle: "marshall-presson" },

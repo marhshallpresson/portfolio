@@ -14,6 +14,10 @@ export default function Contact() {
           <div><p className="text-lg font-semibold">Prefer to talk it through?</p><p className="text-sm text-muted">Pick a time that works for you. 30-minute intro call.</p></div>
           <a href={profile.booking} target="_blank" rel="noreferrer" className="rounded-full bg-accent px-6 py-3 font-medium text-accent-ink">Let's talk: book on Cal.com</a>
         </Reveal>
+        <Reveal className="mb-6 flex flex-col items-start justify-between gap-4 rounded-2xl border border-line bg-surface p-6 sm:flex-row sm:items-center">
+          <div><p className="text-lg font-semibold">Support my work</p><p className="text-sm text-muted">Send a tip through my TipStack page.</p></div>
+          <a href={profile.tip} target="_blank" rel="noreferrer" className="rounded-full border border-line px-6 py-3 font-medium transition hover:border-accent hover:text-accent">Tip me on TipStack</a>
+        </Reveal>
         <Reveal><HireForm /></Reveal>
       </section>
       <section className={`${wrap} grid gap-12 pb-12 md:grid-cols-[1fr_1.4fr]`}>

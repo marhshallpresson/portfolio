@@ -33,6 +33,7 @@ export function Footer() {
             <li><a href={`mailto:${profile.email}`} className="text-muted hover:text-text">{profile.email}</a></li>
             {profile.phones.map((p) => <li key={p.tel}><a href={`tel:${p.tel}`} className="text-muted hover:text-text">{p.display}</a></li>)}
             <li><a href={profile.booking} target="_blank" rel="noreferrer" className="text-muted hover:text-text">Let&apos;s talk (Cal.com)</a></li>
+            <li><a href={profile.tip} target="_blank" rel="noreferrer" className="text-muted hover:text-text">Tip me on TipStack</a></li>
             <li><a href="/contact/" className="text-muted hover:text-text">Hire me</a></li>
           </ul>
         </div>

@@ -1,4 +1,4 @@
-import { ArrowRight, ArrowUpRight, CalendarDays, Rocket, Check, ChevronDown, Code2, CreditCard, Film, Search, Server, Smartphone, Sparkles, Layers, Shield, Bug, Wrench, MessageSquare } from "lucide-react";
+import { ArrowRight, ArrowUpRight, CalendarDays, Heart, Rocket, Check, ChevronDown, Code2, CreditCard, Film, Search, Server, Smartphone, Sparkles, Layers, Shield, Bug, Wrench, MessageSquare } from "lucide-react";
 import { orgs, principles, process, profile, projects, qualities, recognition, services, stats, toolbelt, type Project } from "@/data/profile";
 import { SocialIcon, TechIcon, Tile } from "./logos";
 import { BrowserFrame, Counter, MaskTitle, Pattern, PhotoSlider, ProjectLogo, Reveal, Typewriter } from "./widgets";
@@ -35,6 +35,7 @@ export function Intro() {
             <a href="/projects/" className="inline-flex min-w-[180px] items-center justify-center gap-2 rounded-full bg-accent px-7 py-3.5 font-medium text-accent-ink transition hover:opacity-90">See my work <ArrowRight size={16} /></a>
             <a href="/contact/" className="inline-flex min-w-[180px] items-center justify-center rounded-full bg-surface-2 px-7 py-3.5 font-medium transition hover:bg-line">Hire me</a>
             <a href={profile.booking} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full border border-line px-6 py-3.5 font-medium transition hover:border-text"><CalendarDays size={16} /> Let&apos;s talk</a>
+            <a href={profile.tip} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full border border-line px-6 py-3.5 font-medium transition hover:border-accent hover:text-accent"><Heart size={16} /> Tip me</a>
             <a href={profile.cvFile} download className="inline-flex items-center justify-center rounded-full px-5 py-3.5 font-medium text-muted underline-offset-4 hover:text-text hover:underline">Download CV</a>
           </div>
         </Reveal>
@@ -225,6 +226,7 @@ export function FindMe() {
   const items = [
     { icon: "Email", value: profile.email, label: "Email", href: `mailto:${profile.email}` },
     { icon: "Cal", value: "cal.com/marshallpresson", label: "Let's talk", href: profile.booking },
+    { icon: "Tip", value: "tipstack.fun/mobot", label: "Tip me", href: profile.tip },
     ...profile.phones.map((p) => ({ icon: "WhatsApp", value: p.display, label: p.whatsapp ? "WhatsApp / Call" : "Call", href: p.whatsapp ? `https://wa.me/${p.tel.replace("+", "")}` : `tel:${p.tel}` })),
     ...profile.socials.filter((s) => s.href).map((s) => ({ icon: s.label, value: s.handle, label: s.label, href: s.href })),
   ];
@@ -234,7 +236,7 @@ export function FindMe() {
         {items.map((it, i) => (
           <Reveal key={it.label + it.value} delay={(i % 3) * 0.06}>
             <a href={it.href} target={it.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer" className="group flex flex-col items-center text-center">
-              {it.icon === "Cal" ? <CalendarDays size={26} className="transition duration-300 group-hover:-translate-y-1 group-hover:text-accent" /> : <SocialIcon name={it.icon} size={26} className="transition duration-300 group-hover:-translate-y-1 group-hover:text-accent" />}
+              {it.icon === "Cal" ? <CalendarDays size={26} className="transition duration-300 group-hover:-translate-y-1 group-hover:text-accent" /> : it.icon === "Tip" ? <Heart size={26} className="transition duration-300 group-hover:-translate-y-1 group-hover:text-accent" /> : <SocialIcon name={it.icon} size={26} className="transition duration-300 group-hover:-translate-y-1 group-hover:text-accent" />}
               <span className="mt-3 break-all text-[15px] font-medium">{it.value}</span>
               <span className="text-sm text-muted">{it.label}</span>
             </a>

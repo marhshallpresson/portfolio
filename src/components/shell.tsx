@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 import { AnimatePresence, motion, useScroll, useSpring } from "motion/react";
-import { Download, FolderKanban, Home, Mail, Menu, Monitor, Moon, Sun, User, X } from "lucide-react";
+import { Download, FolderKanban, Heart, Home, Mail, Menu, Monitor, Moon, Sun, User, X } from "lucide-react";
 import { profile } from "@/data/profile";
 
 declare global { interface Window { __lenis?: Lenis } }
@@ -161,18 +161,19 @@ export function BottomBar() {
   return (
     <motion.nav aria-label="Quick navigation" initial={{ y: 120, opacity: 0 }} animate={{ y: visible ? 0 : 120, opacity: visible ? 1 : 0 }} transition={{ type: "spring", stiffness: 260, damping: 28, delay: 0.2 }}
       className="no-print fixed inset-x-0 bottom-[max(14px,env(safe-area-inset-bottom))] z-[60] flex justify-center px-3">
-      <div className="flex items-center gap-1 rounded-full border border-line bg-surface/80 p-1.5 shadow-[0_18px_50px_-15px_rgba(0,0,0,.45)] backdrop-blur-xl">
+      <div className="flex items-center gap-0 rounded-full border border-line bg-surface/80 p-1 shadow-[0_18px_50px_-15px_rgba(0,0,0,.45)] backdrop-blur-xl sm:gap-1 sm:p-1.5">
         {barItems.map((it) => {
           const active = it.href === "/" ? path === "/" : path?.startsWith(it.href.replace(/\/$/, ""));
           const Icon = it.icon;
           return (
-            <a key={it.href} href={it.href} aria-current={active ? "page" : undefined} className="relative flex h-11 items-center gap-2 rounded-full px-3.5 text-[13px] font-medium sm:px-4">
+            <a key={it.href} href={it.href} aria-label={it.label} aria-current={active ? "page" : undefined} className="relative flex h-11 min-w-11 items-center justify-center gap-2 rounded-full px-2 text-[13px] font-medium sm:px-4">
               {active && <motion.span layoutId="bar-pill" className="absolute inset-0 rounded-full bg-accent" transition={{ type: "spring", stiffness: 400, damping: 32 }} />}
               <Icon size={17} className={`relative ${active ? "text-accent-ink" : "text-muted"}`} />
-              <span className={`relative ${active ? "text-accent-ink" : "hidden text-muted sm:inline"}`}>{it.label}</span>
+              <span className={`relative hidden sm:inline ${active ? "text-accent-ink" : "text-muted"}`}>{it.label}</span>
             </a>
           );
         })}
+        <a href={profile.tip} target="_blank" rel="noreferrer" aria-label="Tip me on TipStack" className="flex h-11 min-w-11 items-center justify-center gap-2 rounded-full px-2 text-[13px] font-medium text-accent hover:bg-accent-soft sm:px-4"><Heart size={17} /><span className="hidden sm:inline">Tip me</span></a>
         <span className="mx-1 h-6 w-px bg-line" />
         <ThemeToggle compact />
       </div>
