@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+/* Light (default): Oladiipo / Mr Bayo clean white, blue accent */
+:root,
+:root[data-theme="light"] {
+  --bg: #fafafa;
+  --surface: #ffffff;
+  --surface-2: #f3f4f6;
+  --line: #e5e7eb;
+  --text: #0a0a0a;
+  --muted: #6b7280;
+  --accent: #2456e6;
+  --accent-soft: #e8eefe;
+  --accent-ink: #ffffff;
+  --ok: #16a34a;
+  color-scheme: light;
+}
+/* Dark: Ameer black + Ime ash cards */
+:root[data-theme="dark"] {
+  --bg: #0b0b0c;
+  --surface: #161719;
+  --surface-2: #1f2023;
+  --line: #2a2b2f;
+  --text: #f5f5f5;
+  --muted: #9ca3af;
+  --accent: #5b8cff;
+  --accent-soft: #17213d;
+  --accent-ink: #0b0b0c;
+  --ok: #4ade80;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+  --color-accent-ink: var(--accent-ink);
+  --color-ok: var(--ok);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-cond: var(--font-sixcaps), "Arial Narrow", Impact, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+}
+
+html { scroll-behavior: auto; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color .4s ease, color .4s ease;
+}
+::selection { background: var(--accent); color: var(--accent-ink); }
+
+/* Condensed display (Ameer) */
+.cond { font-family: var(--font-cond); font-weight: 400; line-height: .86; letter-spacing: .005em; text-transform: uppercase; }
+/* Mono eyebrow (Oladiipo) */
+.eyebrow { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+
+/* Header blur mask (Ameer) */
+.header-blur {
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent);
+  mask-image: linear-gradient(to bottom, #000 55%, transparent);
+}
+
+/* Card patterns */
+.pat-grid { background-image: linear-gradient(rgba(255,255,255,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.12) 1px, transparent 1px); background-size: 48px 48px; }
+.pat-dots { background-image: radial-gradient(rgba(255,255,255,.28) 1.2px, transparent 1.2px); background-size: 22px 22px; }
+
+/* Marquee (Mr Bayo) */
+@keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+.marquee-track { animation: marquee 45s linear infinite; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+
+/* Lenis */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+@keyframes caret { 50% { opacity: 0 } }
+.caret { animation: caret 1s step-end infinite; }
+
+@media (hover: none) { .cursor-dot { display: none !important; } }
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track, .caret { animation: none; }
+}
+
+@media print {
+  @page { margin: 14mm; }
+  :root, :root[data-theme="dark"], :root[data-theme="light"] {
+    --bg: #fff; --surface: #fff; --surface-2: #fff; --line: #e5e7eb; --text: #0a0a0a; --muted: #4b5563; --accent: #1d4ed8;
+  }
+  .no-print { display: none !important; }
+  body { font-size: 10.5pt; }
+}
