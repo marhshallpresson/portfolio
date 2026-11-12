@@ -3,7 +3,7 @@ import { FindMe, GiantCTA, GiantHero, wrap } from "@/components/blocks";
 import { ContactForm, HireForm, MaskTitle, Reveal } from "@/components/widgets";
 import { profile } from "@/data/profile";
 
-export const metadata: Metadata = { title: "Contact", description: `Hire or contact ${profile.name}.`, alternates: { canonical: "/contact/" } };
+export const metadata: Metadata = { title: "Contact", description: `Contact ${profile.name} about software engineering, mobile apps, payments and contract work.`, alternates: { canonical: "/contact/" }, openGraph: { title: `Contact ${profile.name}`, description: "Discuss software engineering, mobile apps and payment integrations with Marshall Presson.", url: "/contact/", images: ["/og.png"] } };
 
 export default function Contact() {
   return (

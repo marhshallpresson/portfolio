@@ -3,7 +3,7 @@ import { GiantCTA, GiantHero, ProjectCard, wrap } from "@/components/blocks";
 import { Reveal } from "@/components/widgets";
 import { projects } from "@/data/profile";
 
-export const metadata: Metadata = { title: "Projects", description: "Selected products, client apps and open-source tools by Marshall Presson.", alternates: { canonical: "/projects/" } };
+export const metadata: Metadata = { title: "Software Engineering Projects", description: "Explore Marshall Presson's web and mobile apps, payment platforms, client projects and open-source tools.", alternates: { canonical: "/projects/" }, openGraph: { title: "Software Engineering Projects | Marshall Presson", description: "Web and mobile apps, payment platforms and open-source projects by Marshall Presson.", url: "/projects/", images: ["/og.png"] } };
 
 export default function Projects() {
   return (

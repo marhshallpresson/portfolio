@@ -5,14 +5,34 @@ import { SocialIcon } from "@/components/logos";
 import { MaskTitle, Portrait, Reveal } from "@/components/widgets";
 import { education, experience, profile, recognition } from "@/data/profile";
 
-export const metadata: Metadata = { title: "About", description: `About ${profile.name}, ${profile.role}.`, alternates: { canonical: "/about/" } };
+export const metadata: Metadata = {
+  title: "About: Software Engineer & Mobile Developer",
+  description: "Meet Marshall Presson, a Nigeria-based full-stack and mobile software engineer building payment integrations, marketplaces and creator tools.",
+  alternates: { canonical: "/about/" },
+  openGraph: { title: "About Marshall Presson | Software Engineer", description: "Experience, projects and background of Marshall Presson, a full-stack and mobile software engineer.", url: "/about/", images: ["/og.png"] },
+};
 
 export default function About() {
+  const profilePage = {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    url: `${profile.siteUrl}/about/`,
+    mainEntity: {
+      "@type": "Person",
+      "@id": `${profile.siteUrl}/#marshall-presson`,
+      name: profile.name,
+      alternateName: profile.fullName,
+      description: profile.summary,
+      image: `${profile.siteUrl}${profile.photo}`,
+      sameAs: profile.socials.map((s) => s.href).filter(Boolean),
+    },
+  };
   const rows = [
     ...experience.map((e) => ({ year: e.period.replace(" — ", "–").replace("Present", "Now"), title: e.title, org: e.org })),
   ];
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(profilePage).replace(/</g, "\\u003c") }} />
       <GiantHero word="About" sub="The story behind the engineer: where I started, what I build, and how I work." right="Who is Marshall?" />
       {/* Enny: sticky vCard + content */}
       <section id="next" className={`${wrap} grid gap-12 pb-24 lg:grid-cols-[340px_1fr]`}>

@@ -9,14 +9,13 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "sw
 const jetbrains = JetBrains_Mono({ subsets: ["latin"], variable: "--font-jetbrains", display: "swap" });
 const sixcaps = Six_Caps({ weight: "400", subsets: ["latin"], variable: "--font-sixcaps", display: "swap" });
 
-const title = `${profile.name} | ${profile.role}`;
-const description = profile.intro;
+const title = `${profile.name} | Software Engineer & Mobile Developer`;
+const description = "Marshall Presson is a full-stack software engineer and mobile developer in Nigeria, building web apps, Flutter products and payment integrations.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(profile.siteUrl),
   title: { default: title, template: `%s | ${profile.name}` },
   description,
-  keywords: [profile.name, "Marshall Presson Nimuno", "full-stack engineer", "mobile engineer", "Nigeria", "React", "Node.js", "Flutter", "Solana", "Paystack"],
   authors: [{ name: profile.name, url: profile.siteUrl }],
   alternates: { canonical: "/" },
   openGraph: { type: "website", url: profile.siteUrl, title, description, siteName: profile.name, images: [{ url: "/og.png", width: 1200, height: 630, alt: title }] },
@@ -36,9 +35,12 @@ const themeScript = `(function(){try{var t=localStorage.getItem('theme');var sys
 const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
+  "@id": `${profile.siteUrl}/#marshall-presson`,
   name: profile.name,
   alternateName: profile.fullName,
   jobTitle: profile.role,
+  description,
+  image: `${profile.siteUrl}${profile.photo}`,
   url: profile.siteUrl,
   email: `mailto:${profile.email}`,
   telephone: profile.phones[0]?.tel,

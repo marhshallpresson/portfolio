@@ -11,7 +11,7 @@ export function generateStaticParams() { return projects.map((p) => ({ slug: p.s
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const p = projects.find((x) => x.slug === slug);
-  return p ? { title: `${p.name}: ${p.kicker}`, description: p.summary, alternates: { canonical: `/projects/${p.slug}/` } } : {};
+  return p ? { title: `${p.name}: ${p.kicker}`, description: p.summary, alternates: { canonical: `/projects/${p.slug}/` }, openGraph: { title: `${p.name} | Marshall Presson`, description: p.summary, url: `/projects/${p.slug}/`, images: [p.shots?.[0]?.src || "/og.png"] } } : {};
 }
 
 export default async function ProjectPage({ params }: { params: Promise<{ slug: string }> }) {

@@ -3,7 +3,7 @@ import { ArrowLeft, Download } from "lucide-react";
 import { education, experience, profile, projects, recognition, skills } from "@/data/profile";
 import { PrintButton } from "./PrintButton";
 
-export const metadata: Metadata = { title: "Résumé", description: `Résumé of ${profile.name}, ${profile.role}.`, alternates: { canonical: "/resume/" } };
+export const metadata: Metadata = { title: "Software Engineer Résumé", description: `Explore ${profile.name}'s software engineering experience, projects, skills, education and awards.`, alternates: { canonical: "/resume/" }, openGraph: { title: `Software Engineer Résumé | ${profile.name}`, description: "Experience, projects, skills and education of Marshall Presson.", url: "/resume/", images: ["/og.png"] } };
 
 const H = ({ children }: { children: React.ReactNode }) => (
   <h2 className="mb-2.5 mt-7 border-b border-line pb-1.5 font-mono text-[11px] font-semibold uppercase tracking-[0.16em] text-accent print:mt-5">{children}</h2>

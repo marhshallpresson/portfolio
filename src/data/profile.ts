@@ -9,7 +9,7 @@ export const profile = {
   fullName: "Marshall Presson Nimuno",
   role: "Full-Stack & Mobile Engineer",
   roles: ["Full-Stack Engineer", "Mobile Engineer", "Payments & Integrations Engineer", "Web3 Builder"],
-  oneLiner: "Full-stack & mobile engineer shipping web and Flutter apps with payments that work, from Paystack checkout to Solana wallets.",
+  oneLiner: "I'm Marshall Presson, a software engineer building web and mobile apps, payment integrations and creator tools.",
   headline: "I ship web and mobile products where the payment flow can't fail.",
   intro:
     "Full-stack engineer with 3+ years shipping payment flows, marketplaces and creator tools with React, Node.js, Python and Flutter. Lead Developer at TipStack (Solana creator payments). Open to full-time and contract roles, remote.",
