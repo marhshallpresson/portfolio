@@ -1,0 +1,13 @@
+# Portfolio inbox service
+
+This separate Node.js service stores portfolio messages in MySQL and sends an SMTP notification using the same Nodemailer pattern as NextGen. Its root URL serves a password-protected admin inbox; visitors do not create accounts. Replies open the admin's email application. A failed email notification leaves the message in the database with a retry button.
+
+## Deploy and configure
+
+1. Provision a separate MySQL database with a user allowed to create the `portfolio_messages` table and read, insert, and update its rows. Use an encrypted database connection supported by the provider and back up the database. Do not reuse NextGen production credentials or tables.
+2. In Pxxl, create a separate Node.js service from this repository with `inbox-server` as its project/root directory, `npm install` as install command and `npm start` as start command. Set the service's HTTPS domain and environment variables from `.env.example` in the Pxxl dashboard. Set `SITE_ORIGIN` to `https://marshallpresson.cv`, `ADMIN_ORIGIN` to the exact HTTPS origin of the inbox, and `DATABASE_URL` to the separate database connection string. `SMTP_FROM` must be a sender allowed by the SMTP provider; `NOTIFY_EMAIL` is where the owner receives messages. Set SMTP username/password where required. Do not commit credentials.
+3. Set independent long random values for `ADMIN_PASSWORD` and `SESSION_SECRET` (at least 32 characters each). Store them securely. `/health` is available for health checks. Ensure the host runs one instance or configure shared rate limiting at the edge: the built-in rate limiter is per process and resets on restart. Configure IP forwarding and edge limits appropriately for Pxxl.
+4. Once the service is live, set `NEXT_PUBLIC_INBOX_URL` to its HTTPS origin in the portfolio's **build** environment and redeploy the portfolio. The existing FormSubmit integration remains in use until this variable is set. The public variable is an address only; never place credentials in a `NEXT_PUBLIC_` variable.
+5. Test with an explicitly agreed test message: verify it appears in the admin inbox, the notification arrives in `NOTIFY_EMAIL`, reply-to points to the sender, and a failed SMTP notification stays visible and can be retried. Check that wrong credentials and cross-origin requests are rejected. Confirm the inbox is protected over HTTPS.
+
+Use a unique admin password, protect the hosting and database accounts, and rotate `SESSION_SECRET` to invalidate existing login cookies. The application has no visitor signup, account administration, automatic email retry, or email sending from the dashboard; replies use the owner's normal email client. The dashboard displays the latest 200 messages and does not delete records.

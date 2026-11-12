@@ -325,6 +325,16 @@ export function ResumeTabs() {
 
 /* ---------- Contact form: real delivery via FormSubmit ---------- */
 async function send(f: FormData) {
+  const inboxUrl = process.env.NEXT_PUBLIC_INBOX_URL;
+  if (inboxUrl) {
+    const response = await fetch(`${inboxUrl.replace(/\/$/, "")}/api/messages`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: f.get("name"), email: f.get("email"), subject: f.get("subject") || "Portfolio enquiry", message: f.get("message"), website: f.get("_honey") || "" }),
+    });
+    if (!response.ok) throw new Error("send failed");
+    return;
+  }
   const res = await fetch(profile.formEndpoint, {
     method: "POST",
     headers: { "Content-Type": "application/json", Accept: "application/json" },
