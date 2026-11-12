@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Download, Mail, MapPin, Phone } from "lucide-react";
-import { GiantCTA, GiantHero, wrap } from "@/components/blocks";
+import { CommunityWork, GiantCTA, GiantHero, wrap } from "@/components/blocks";
 import { SocialIcon } from "@/components/logos";
 import { MaskTitle, Portrait, Reveal } from "@/components/widgets";
 import { education, experience, profile, recognition } from "@/data/profile";
@@ -94,6 +94,7 @@ export default function About() {
           </ul>
         </div>
       </section>
+      <CommunityWork />
       <GiantCTA eyebrow="Interested to explore more of my work?" word="Projects" href="/projects/" />
     </>
   );

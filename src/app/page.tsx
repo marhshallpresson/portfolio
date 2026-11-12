@@ -1,4 +1,4 @@
-import { Approach, Awards, Companies, Qualities, FindMe, GiantCTA, GiantHero, Intro, MarqueeStats, SectionHead, Services, Tagline, wrap } from "@/components/blocks";
+import { Approach, Awards, Companies, CommunityWork, Qualities, FindMe, GiantCTA, GiantHero, Intro, MarqueeStats, SectionHead, Services, Tagline, wrap } from "@/components/blocks";
 import { projects, profile } from "@/data/profile";
 import { ContactForm, ProjectStack, ResumeTabs, SkillWords } from "@/components/widgets";
 
@@ -14,6 +14,7 @@ export default function Home() {
       <Services />
       <Companies />
       <Awards />
+      <CommunityWork />
       <section id="resume" className={`${wrap} py-24`}>
         <SectionHead eyebrow="3+ years of experience" title="My Résumé" center />
         <ResumeTabs />

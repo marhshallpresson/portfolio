@@ -324,6 +324,11 @@ export function ResumeTabs() {
 }
 
 /* ---------- Contact form: real delivery via FormSubmit ---------- */
+function emailDraft(f: FormData) {
+  const subject = String(f.get("subject") || "Portfolio enquiry");
+  const body = `Name: ${f.get("name") || ""}\nEmail: ${f.get("email") || ""}\n\n${f.get("message") || ""}`;
+  return `mailto:${profile.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
 async function send(f: FormData) {
   const inboxUrl = process.env.NEXT_PUBLIC_INBOX_URL;
   if (inboxUrl) {
@@ -351,12 +356,14 @@ async function send(f: FormData) {
 
 export function ContactForm({ variant = "card" }: { variant?: "card" | "line" }) {
   const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [draft, setDraft] = useState(`mailto:${profile.email}`);
   const [len, setLen] = useState(0);
-  useEffect(() => { if (state === "sent" || state === "error") { const t = setTimeout(() => setState("idle"), 7000); return () => clearTimeout(t); } }, [state]);
+  useEffect(() => { if (state === "sent") { const t = setTimeout(() => setState("idle"), 7000); return () => clearTimeout(t); } }, [state]);
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget; const f = new FormData(form);
     if (f.get("_honey")) return;
+    setDraft(emailDraft(f));
     setState("sending");
     try { await send(f); setState("sent"); form.reset(); setLen(0); } catch { setState("error"); }
   };
@@ -367,7 +374,7 @@ export function ContactForm({ variant = "card" }: { variant?: "card" | "line" })
         <motion.div role="status" initial={{ y: 60, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 60, opacity: 0 }}
           className="fixed bottom-6 left-1/2 z-[90] flex w-[calc(100%-2rem)] max-w-md -translate-x-1/2 items-center gap-3 rounded-xl bg-[#111] px-5 py-4 text-sm text-white shadow-2xl">
           {state === "sent" ? <Check size={18} className="text-[#5b8cff]" /> : <X size={18} className="text-red-400" />}
-          <span className="flex-1">{state === "sent" ? "Message sent. I'll reply within 24 hours." : <>Couldn&apos;t send. Email <a className="underline" href={`mailto:${profile.email}`}>{profile.email}</a></>}</span>
+          <span className="flex-1">{state === "sent" ? "Message sent. I'll reply within 24 hours." : <>Couldn&apos;t send. <a className="underline" href={draft}>Open your message in your email app</a>.</>}</span>
         </motion.div>
       )}
     </AnimatePresence>
@@ -424,13 +431,15 @@ export function HireForm() {
   const [via, setVia] = useState("Email");
   const [len, setLen] = useState(0);
   const [state, setState] = useState<"idle" | "sending" | "sent" | "error">("idle");
-  useEffect(() => { if (state === "sent" || state === "error") { const t = setTimeout(() => setState("idle"), 7000); return () => clearTimeout(t); } }, [state]);
+  const [draft, setDraft] = useState(`mailto:${profile.email}`);
+  useEffect(() => { if (state === "sent") { const t = setTimeout(() => setState("idle"), 7000); return () => clearTimeout(t); } }, [state]);
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget; const f = new FormData(form);
     if (f.get("_honey")) return;
     f.set("subject", kind);
     f.set("message", `${f.get("message")}\n\nType: ${kind}\nPhone: ${f.get("phone") || "-"}${f.get("wa") ? " (WhatsApp)" : ""}\nPreferred contact: ${via}`);
+    setDraft(emailDraft(f));
     setState("sending");
     try { await send(f); setState("sent"); form.reset(); setLen(0); } catch { setState("error"); }
   };
@@ -469,7 +478,7 @@ export function HireForm() {
           {state === "sending" ? <><Loader2 size={16} className="animate-spin" /> Sending…</> : <>Send request <Send size={15} /></>}
         </button>
         {state === "sent" && <p className="text-sm text-ok">Request sent. I&apos;ll get back to you within 24 hours.</p>}
-        {state === "error" && <p className="text-sm text-red-500">Couldn&apos;t send. Email me at <a className="underline" href={`mailto:${profile.email}`}>{profile.email}</a>.</p>}
+        {state === "error" && <p className="text-sm text-red-500">Couldn&apos;t send. <a className="underline" href={draft}>Open your message in your email app</a>.</p>}
       </div>
     </form>
   );

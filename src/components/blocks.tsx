@@ -1,9 +1,19 @@
 import { ArrowRight, ArrowUpRight, CalendarDays, Heart, Rocket, Check, ChevronDown, Code2, CreditCard, Film, Search, Server, Smartphone, Sparkles, Layers, Shield, Bug, Wrench, MessageSquare } from "lucide-react";
-import { orgs, principles, process, profile, projects, qualities, recognition, services, stats, toolbelt, type Project } from "@/data/profile";
+import { communityWork, orgs, principles, process, profile, projects, qualities, recognition, services, stats, toolbelt, type Project } from "@/data/profile";
 import { SocialIcon, TechIcon, Tile } from "./logos";
 import { BrowserFrame, Counter, MaskTitle, Pattern, PhotoSlider, ProjectLogo, Reveal, Typewriter } from "./widgets";
 
 export const wrap = "mx-auto max-w-[1200px] px-5 sm:px-8";
+export function CommunityWork() {
+  return (
+    <section className={`${wrap} py-20`} aria-labelledby="community-heading">
+      <Reveal><p className="eyebrow">Beyond the code</p><h2 id="community-heading" className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">Building community, together.</h2><p className="mt-4 max-w-2xl text-muted">Supporting the people and events helping Eket&apos;s technology community learn and grow.</p></Reveal>
+      <div className="mt-10 grid gap-4 md:grid-cols-3">
+        {communityWork.map((item) => <Reveal key={item.event}><article className="h-full rounded-2xl border border-line bg-surface p-6"><p className="eyebrow">{item.year} · {item.title}</p><h3 className="mt-4 text-xl font-semibold">{item.event}</h3><p className="mt-3 text-sm leading-6 text-muted">{item.description}</p><a href={item.source} target="_blank" rel="noreferrer" className="mt-5 inline-flex min-h-11 items-center gap-1 text-sm font-medium text-accent hover:underline">{item.sourceLabel} <ArrowUpRight size={14} /></a></article></Reveal>)}
+      </div>
+    </section>
+  );
+}
 const serviceIcons = { code: Code2, phone: Smartphone, card: CreditCard, server: Server, spark: Sparkles, video: Film, rocket: Rocket } as const;
 const principleIcons = [Search, Layers, Wrench, Bug, Shield, MessageSquare];
 

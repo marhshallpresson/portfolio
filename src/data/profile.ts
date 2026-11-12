@@ -333,6 +333,11 @@ projects.push(
 );
 
 export type Role = { title: string; org: string; orgId: string; period: string; place: string; badge: string; summary: string };
+export const communityWork = [
+  { year: "2026", title: "Organizing team", event: "WordCamp Eket", description: "Helped organize Eket's inaugural WordCamp, bringing the local WordPress community together.", source: "https://eket.wordcamp.org/2026/recap-eket-hosts-its-first-wordcamp-from-idea-to-income-building-opportunities-with-wordpress/", sourceLabel: "Read the event recap" },
+  { year: "2025", title: "Volunteer and media support", event: "DevFest Eket", description: "Supported the volunteer and media teams at DevFest Eket.", source: "https://ng.linkedin.com/in/matt-kay-vic", sourceLabel: "Read the community mention" },
+  { year: "2026", title: "Volunteer", event: "Build with AI Eket", description: "Supported a community event focused on hands-on AI development.", source: "https://ng.linkedin.com/in/iamjackieriel", sourceLabel: "Read the organizer's mention" },
+];
 export const experience: Role[] = [
   { title: "Lead Developer", org: "TipStack", orgId: "tipstack", period: "2026 — Present", place: "Remote", badge: "Remote",
     summary: "Lead the React/Vite product: creator pages, onboarding and payment UX. Own wallet-connection and Solana payment integration (Dynamic SDK, Phantom)." },
