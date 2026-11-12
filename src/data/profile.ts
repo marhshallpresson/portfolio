@@ -17,7 +17,7 @@ export const profile = {
     "Full-stack engineer with 3+ years shipping web and cross-platform products: creator payments, e-commerce, service marketplaces and business platforms. I turn business requirements into working user journeys, integrate the services that make them real (Paystack, Stripe, OAuth2, Solana wallets), and care about debugging, maintainability and clear communication.",
   about: [
     "I'm Marshall, an engineer from Eket, Akwa Ibom, Nigeria. I started in 2022 doing IT support and teaching computer classes at Eagle Bliss Empire, taught myself mobile development, and have been shipping products for clients and teams ever since.",
-    "Today I lead development at TipStack, a creator monetization platform on Solana, and build product at Kendibo, a hackathon-winning home-services marketplace. I also contract for businesses that need a platform redesigned, a marketplace built, or a payment flow that just works.",
+    "Today I lead development at TipStack, a creator monetization platform on Solana, and develop Kendibo, a home-services marketplace at the MVP stage. I also contract for businesses that need a platform redesigned, a marketplace built, or a payment flow that just works.",
     "I build under pressure and in public: 1st place at the DevFest Eket and Build with AI hackathons, 2nd place at Next Gen Summit Uyo, and open-source tools on GitHub. I'm completing a B.Sc. in Computer Science at Miva Open University, and I care about clean code, clear communication and owning outcomes end to end.",
   ],
   location: "Eket, Akwa Ibom, Nigeria",
@@ -74,7 +74,7 @@ export type Org = { id: string; name: string; initials: string; color: string; a
 /** Teams, clients and communities. Drop a real logo at public/logos/<id>.svg and set `logo`. */
 export const orgs: Org[] = [
   { id: "tipstack", name: "TipStack", initials: "TS", color: "#9B37E6", about: "Creator monetization and rewards platform on Solana. I lead development.", logo: "/logos/tipstack.png" },
-  { id: "kendibo", name: "Kendibo", initials: "K", color: "#0F9D58", about: "Home-services marketplace connecting customers with trusted professionals. Hackathon winner.", url: "https://kendibo.ng" }, // TODO: add logo: "/logos/kendibo.png"
+  { id: "kendibo", name: "Kendibo", initials: "K", color: "#0F9D58", about: "Pre-launch home-services marketplace connecting customers with professionals.", url: "https://kendibo.ng" }, // TODO: add logo: "/logos/kendibo.png"
   { id: "missnova", name: "Miss Nova Nigeria", initials: "MN", color: "#C99A16", about: "National pageant organisation. Website build and content migration.", logo: "/logos/missnova.png" },
   { id: "nextgen", name: "NextGen Talent", initials: "NG", color: "#C99A16", about: "E-voting, event tickets and commerce platform for talent shows.", url: "https://nextgentalenttv.com", logo: "/logos/nextgen.png" },
   { id: "asoeva", name: "ASO EVA", initials: "AE", color: "#6B21A8", about: "Asoeva Awards: official public voting platform for the Association of Event Vendors.", url: "https://asoeva.vercel.app", logo: "/logos/asoeva.jpg" },
@@ -84,6 +84,9 @@ export const orgs: Org[] = [
   { id: "eaglebliss", name: "Eagle Bliss Empire", initials: "EB", color: "#1E40AF", about: "IT services company where I started: support, training and client websites." },
   { id: "superteam", name: "Superteam NG", initials: "ST", color: "#5B21B6", about: "Solana builder community. Pitched TipStack at Superteam NG's Frontier hackathon event." },
   { id: "gdg", name: "GDG DevFest Eket", initials: "G", color: "#1A73E8", about: "Google Developer Groups. 1st place at the DevFest Eket and Build with AI hackathons." },
+  { id: "wordcamp", name: "WordCamp Eket", initials: "WC", color: "#21759B", about: "Community-led WordPress event in Eket." },
+  { id: "africinnovate", name: "AfricInnovate", initials: "AI", color: "#0E7490", about: "Community technology organization in Eket." },
+  { id: "freelance", name: "Freelance / Contract", initials: "MP", color: "#2456E6", about: "Independent web and mobile development." },
 ];
 
 export type Project = {
@@ -149,12 +152,12 @@ export const projects: Project[] = [
     color: "#0B7A44",
     ink: "light",
     pattern: "grid",
-    summary: "Customers discover and book trusted home-service professionals, and providers get steady work.",
+    summary: "A pre-launch home-services marketplace intended to help customers find professionals and providers access jobs.",
     problem: "Finding a reliable plumber, electrician or cleaner runs on word of mouth. Customers can't compare providers, and good providers can't reach new customers.",
     approach: "Mapped the platform as two products sharing one core: the customer journey (discover → compare → book) and the provider journey (onboard → receive jobs → manage work), then built the MVP around booking as the central object.",
     decisions: "Kept v1 scope to discovery, booking and provider operations; payments, ratings and dispute handling were sequenced for after launch to get real usage data first.",
     challenges: "Balancing a two-sided marketplace: designing flows that work for customers without overloading providers, and defining clear launch-readiness criteria for a small team.",
-    result: "Hackathon-winning MVP, live at kendibo.ng with an early-access waitlist for customers and service partners.",
+    result: "MVP and pre-launch product with a WhatsApp agent; the team reports winning a hackathon. An early-access site is available for customers and service partners.",
     stack: ["React", "Node.js", "Firebase"], // TODO: confirm exact stack
     live: "https://kendibo.ng",
     shots: [{ src: "/shots/kendibo-home.jpg", label: "Landing page" }, { src: "/shots/kendibo-2.jpg", label: "How it works" }, { src: "/shots/kendibo-3.jpg", label: "Services" }],
@@ -339,16 +342,26 @@ export const communityWork = [
   { year: "2026", title: "Volunteer", event: "Build with AI Eket", description: "Supported a community event focused on hands-on AI development.", source: "https://ng.linkedin.com/in/iamjackieriel", sourceLabel: "Read the organizer's mention" },
 ];
 export const experience: Role[] = [
-  { title: "Lead Developer", org: "TipStack", orgId: "tipstack", period: "2026 — Present", place: "Remote", badge: "Remote",
-    summary: "Lead the React/Vite product: creator pages, onboarding and payment UX. Own wallet-connection and Solana payment integration (Dynamic SDK, Phantom)." },
-  { title: "Product Developer", org: "Kendibo", orgId: "kendibo", period: "2026 — Present", place: "Nigeria", badge: "Nigeria",
-    summary: "Built the hackathon-winning MVP of a home-services marketplace: discovery, booking and provider operations." },
-  { title: "Full-Stack / Mobile Developer", org: "Freelance · Komewells Global Services", orgId: "komewells", period: "2024 — Present", place: "Remote", badge: "Contract",
-    summary: "Platform redesign, marketplace/e-commerce build and travel-booking integration for Komewells. Payment, geolocation, offline-first and AI features for client apps." },
+  { title: "Project Lead Developer", org: "TipStack", orgId: "tipstack", period: "2026 — Present", place: "Remote", badge: "Remote",
+    summary: "Lead development of a creator rewards and payment platform, including onboarding, creator pages, wallet connections and payment integrations. Selected for a six-week startup accelerator." },
+  { title: "Developer", org: "Kendibo", orgId: "kendibo", period: "Nov 2026 — Present", place: "Nigeria", badge: "MVP / Pre-launch",
+    summary: "Built a WhatsApp agent and worked on customer and provider journeys, service discovery, booking and launch readiness for a home-services marketplace." },
+  { title: "Media Specialist Volunteer", org: "GDG Eket", orgId: "gdg", period: "Oct 2026 — Present", place: "Eket · Hybrid", badge: "Volunteer",
+    summary: "Event photography, interviews, highlight reels and promotional content for DevFest Eket and community events." },
+  { title: "Full-Stack Engineer", org: "Komewells Global Services Limited", orgId: "komewells", period: "Jul 2025 — Present", place: "Remote", badge: "Freelance",
+    summary: "Platform redesign, marketplace development and travel-booking integration, with attention to backend architecture and user flows." },
+  { title: "Representative", org: "WordCamp Eket", orgId: "wordcamp", period: "Apr 2025 — Present", place: "Eket · Hybrid", badge: "Community",
+    summary: "Community event planning and photography; part of the organizing team for the inaugural WordCamp Eket in 2026." },
+  { title: "Application Developer", org: "Freelance / Contract", orgId: "freelance", period: "2024 — Present", place: "Remote", badge: "Contract",
+    summary: "Build mobile and web products with payments, geolocation, offline-first features and AI recommendations; applications have served 10K+ users across platforms." },
+  { title: "Media Specialist", org: "AfricInnovate", orgId: "africinnovate", period: "Aug 2025 — Jul 2026", place: "Eket", badge: "Part-time",
+    summary: "Videography, content management and media support for the local technology community." },
   { title: "Mobile App Developer", org: "Digi Exclusive Innovation", orgId: "digi", period: "2024", place: "Nigeria", badge: "Nigeria",
     summary: "Led an e-commerce vendor app to 5K+ users with OAuth2, Stripe/Paystack, chat and push notifications. Payment integration associated with a 25% revenue lift." },
-  { title: "IT Specialist", org: "Eagle Bliss Empire", orgId: "eaglebliss", period: "2022 — 2024", place: "Eket", badge: "On-site",
-    summary: "IT support, computer training programmes and client web projects (eaglebliss.co)." },
+  { title: "IT Specialist", org: "Eagle Bliss Empire", orgId: "eaglebliss", period: "Jul 2022 — Present", place: "Eket · Hybrid", badge: "Full-time",
+    summary: "IT support, media relations, computer training programmes and client web projects." },
+  { title: "Information Technology Intern", org: "Eagle Bliss Empire", orgId: "eaglebliss", period: "2022 — 2024", place: "Eket", badge: "Internship",
+    summary: "Translated client requirements into IT solutions and supported computer training and web development." },
 ];
 
 export const education = [
