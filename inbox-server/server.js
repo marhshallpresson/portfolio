@@ -2,7 +2,8 @@ import express from 'express';
 import rateLimit from 'express-rate-limit';
 import mysql from 'mysql2/promise';
 import nodemailer from 'nodemailer';
-import { equalPassword, signSession, verifySession } from './security.js';
+import { randomBytes } from 'node:crypto';
+import { equalPassword, sessionTokenHash } from './security.js';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
@@ -19,6 +20,11 @@ await db.execute(`CREATE TABLE IF NOT EXISTS portfolio_messages (
   message TEXT NOT NULL, mail_status VARCHAR(16) NOT NULL DEFAULT 'pending',
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) CHARACTER SET utf8mb4`);
+await db.execute(`CREATE TABLE IF NOT EXISTS portfolio_admin_sessions (
+  token_hash CHAR(64) CHARACTER SET ascii COLLATE ascii_bin NOT NULL PRIMARY KEY,
+  expires_at TIMESTAMP NOT NULL,
+  INDEX (expires_at)
+)`);
 const port = Number(process.env.SMTP_PORT || 587);
 if (!Number.isInteger(port) || port < 1 || port > 65535 || (process.env.SMTP_USER && !process.env.SMTP_PASS)) throw new Error('Invalid SMTP configuration');
 const mail = nodemailer.createTransport({ host: process.env.SMTP_HOST, port, secure: port === 465, requireTLS: port !== 465, connectionTimeout: 10000, greetingTimeout: 10000, socketTimeout: 15000, ...(process.env.SMTP_USER ? { auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS } } : {}) });
@@ -31,11 +37,18 @@ app.use((req, res, next) => { res.set('X-Content-Type-Options', 'nosniff'); res.
 app.use(express.json({ limit: '16kb' }));
 const limiter = rateLimit({ windowMs: 15 * 60 * 1000, limit: 12, standardHeaders: 'draft-7', legacyHeaders: false });
 const loginLimiter = rateLimit({ windowMs: 15 * 60 * 1000, limit: 5, standardHeaders: 'draft-7', legacyHeaders: false });
-const isAuthed = (req) => {
+const sessionHash = (req) => {
   const raw = (req.headers.cookie || '').split(';').map((s) => s.trim()).find((s) => s.startsWith('inbox_session='))?.slice(14) || '';
-  return verifySession(raw, process.env.SESSION_SECRET);
+  return sessionTokenHash(raw, process.env.SESSION_SECRET);
 };
-const auth = (req, res, next) => isAuthed(req) ? next() : res.status(401).json({ error: 'Sign in required.' });
+const auth = async (req, res, next) => {
+  const tokenHash = sessionHash(req);
+  if (!tokenHash) return res.status(401).json({ error: 'Sign in required.' });
+  try {
+    const [rows] = await db.execute('SELECT token_hash FROM portfolio_admin_sessions WHERE token_hash = ? AND expires_at > UTC_TIMESTAMP()', [tokenHash]);
+    return rows.length ? next() : res.status(401).json({ error: 'Sign in required.' });
+  } catch { return res.status(503).json({ error: 'Sign in temporarily unavailable.' }); }
+};
 const sameOrigin = (req, res, next) => req.get('origin') === adminOrigin ? next() : res.status(403).json({ error: 'Invalid origin.' });
 app.get('/health', (_req, res) => res.json({ ok: true }));
 app.options('/api/messages', (req, res) => { if (req.get('origin') !== siteOrigin) return res.sendStatus(403); res.set('Access-Control-Allow-Origin', siteOrigin); res.set('Vary', 'Origin'); res.set('Access-Control-Allow-Methods', 'POST, OPTIONS'); res.set('Access-Control-Allow-Headers', 'Content-Type'); return res.sendStatus(204); });
@@ -54,14 +67,23 @@ app.post('/api/messages', limiter, async (req, res) => {
     return res.status(201).json({ ok: true });
   } catch (error) { console.error('Message storage failed', error.message); return res.status(503).json({ error: 'Message could not be saved.' }); }
 });
-app.post('/api/login', loginLimiter, sameOrigin, (req, res) => {
+app.post('/api/login', loginLimiter, sameOrigin, async (req, res) => {
   const pass = typeof req.body?.password === 'string' ? req.body.password : '';
   if (!equalPassword(pass, process.env.ADMIN_PASSWORD)) return res.status(401).json({ error: 'Invalid password.' });
-  const expires = String(Date.now() + 8 * 60 * 60 * 1000);
-  res.set('Set-Cookie', `inbox_session=${expires}.${signSession(expires, process.env.SESSION_SECRET)}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=28800`);
-  return res.json({ ok: true });
+  try {
+    const token = randomBytes(32).toString('hex');
+    await db.execute('DELETE FROM portfolio_admin_sessions WHERE expires_at <= UTC_TIMESTAMP()');
+    await db.execute('INSERT INTO portfolio_admin_sessions (token_hash, expires_at) VALUES (?, DATE_ADD(UTC_TIMESTAMP(), INTERVAL 8 HOUR))', [sessionTokenHash(token, process.env.SESSION_SECRET)]);
+    res.set('Set-Cookie', `inbox_session=${token}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=28800`);
+    return res.json({ ok: true });
+  } catch { return res.status(503).json({ error: 'Sign in temporarily unavailable.' }); }
 });
-app.post('/api/logout', sameOrigin, (_req, res) => { res.set('Set-Cookie', 'inbox_session=; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0'); res.json({ ok: true }); });
+app.post('/api/logout', sameOrigin, async (req, res) => {
+  const tokenHash = sessionHash(req);
+  try { if (tokenHash) await db.execute('DELETE FROM portfolio_admin_sessions WHERE token_hash = ?', [tokenHash]); }
+  catch { return res.status(503).json({ error: 'Sign out temporarily unavailable.' }); }
+  res.set('Set-Cookie', 'inbox_session=; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=0'); return res.json({ ok: true });
+});
 app.get('/api/messages', auth, async (_req, res) => { try { const [rows] = await db.execute('SELECT id,name,email,subject,message,mail_status,created_at FROM portfolio_messages ORDER BY id DESC LIMIT 200'); res.json({ messages: rows }); } catch { res.status(503).json({ error: 'Inbox unavailable.' }); } });
 app.post('/api/messages/:id/retry', sameOrigin, auth, async (req, res) => {
   if (!/^\d{1,18}$/.test(req.params.id)) return res.sendStatus(400);
