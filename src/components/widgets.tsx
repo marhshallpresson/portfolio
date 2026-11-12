@@ -153,14 +153,15 @@ export function PhotoSlider({ className = "" }: { className?: string }) {
 /* ---------- Card background patterns ---------- */
 export function Pattern({ kind }: { kind: Project["pattern"] }) {
   const topo = useMemo(() => {
+    if (kind !== "topo") return [];
     const paths: string[] = [];
     const centers = [[0.22, 0.3], [0.78, 0.7], [0.6, 0.15]];
     centers.forEach(([cx, cy], ci) => {
       for (let k = 1; k <= 9; k++) {
         const R = k * 0.07;
         let d = "";
-        for (let i = 0; i <= 90; i++) {
-          const t = (i / 90) * Math.PI * 2;
+        for (let i = 0; i <= 32; i++) {
+          const t = (i / 32) * Math.PI * 2;
           const r = R * (1 + 0.18 * Math.sin(3 * t + ci + k * 0.4) + 0.08 * Math.cos(5 * t + k));
           d += `${i ? "L" : "M"}${(cx + Math.cos(t) * r * 0.62).toFixed(4)} ${(cy + Math.sin(t) * r).toFixed(4)}`;
         }
@@ -168,7 +169,7 @@ export function Pattern({ kind }: { kind: Project["pattern"] }) {
       }
     });
     return paths;
-  }, []);
+  }, [kind]);
   if (kind === "grid") return <div className="pat-grid absolute inset-0" aria-hidden />;
   if (kind === "dots") return <div className="pat-dots absolute inset-0" aria-hidden />;
   if (kind === "rings")

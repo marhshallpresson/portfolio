@@ -35,7 +35,7 @@ export function Intro() {
             <a href="/projects/" className="inline-flex min-w-[180px] items-center justify-center gap-2 rounded-full bg-accent px-7 py-3.5 font-medium text-accent-ink transition hover:opacity-90">See my work <ArrowRight size={16} /></a>
             <a href="/contact/" className="inline-flex min-w-[180px] items-center justify-center rounded-full bg-surface-2 px-7 py-3.5 font-medium transition hover:bg-line">Hire me</a>
             <a href={profile.booking} target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full border border-line px-6 py-3.5 font-medium transition hover:border-text"><CalendarDays size={16} /> Let&apos;s talk</a>
-            <a href="/resume/" className="inline-flex items-center justify-center rounded-full px-5 py-3.5 font-medium text-muted underline-offset-4 hover:text-text hover:underline">View résumé</a>
+            <a href={profile.cvFile} download className="inline-flex items-center justify-center rounded-full px-5 py-3.5 font-medium text-muted underline-offset-4 hover:text-text hover:underline">Download CV</a>
           </div>
         </Reveal>
       </div>

@@ -23,7 +23,7 @@ export default function About() {
             <span className="mt-2 inline-block rounded-lg bg-surface-2 px-3 py-1 text-xs">{profile.role}</span>
             <div className="mt-4 flex justify-center gap-2">
               <a href="/contact/" className="rounded-lg bg-accent px-4 py-2 text-sm font-medium text-accent-ink">Hire me</a>
-              <a href="/resume/" className="inline-flex items-center gap-1.5 rounded-lg border border-line px-4 py-2 text-sm font-medium"><Download size={14} /> CV</a>
+              <a href={profile.cvFile} download className="inline-flex items-center gap-1.5 rounded-lg border border-line px-4 py-2 text-sm font-medium"><Download size={14} /> CV</a>
             </div>
             <ul className="mt-6 space-y-4 border-t border-line pt-6 text-left text-sm">
               <li className="flex items-center gap-3"><span className="grid size-10 place-items-center rounded-xl bg-surface-2 text-accent"><Mail size={16} /></span><span><span className="block text-xs uppercase text-muted">Email</span><a href={`mailto:${profile.email}`} className="hover:text-accent">{profile.email}</a></span></li>

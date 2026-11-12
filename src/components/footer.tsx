@@ -23,7 +23,7 @@ export function Footer() {
             <li><a href="/projects/" className="text-muted hover:text-text">Projects</a></li>
             <li><a href="/about/" className="text-muted hover:text-text">About</a></li>
             <li><a href="/resume/" className="text-muted hover:text-text">Résumé</a></li>
-            <li><a href="/resume/" className="text-muted hover:text-text">View résumé</a></li>
+            <li><a href={profile.cvFile} download className="text-muted hover:text-text">Download CV</a></li>
             {profile.listings.map((l) => <li key={l.href}><a href={l.href} target="_blank" rel="noreferrer" className="text-muted hover:text-text">{l.label}</a></li>)}
           </ul>
         </div>

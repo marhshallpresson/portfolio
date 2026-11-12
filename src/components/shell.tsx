@@ -224,7 +224,7 @@ export function Header() {
         </ul>
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <a href="/resume/" className="hidden size-11 place-items-center rounded-full border border-line text-muted transition hover:border-text hover:text-text sm:grid" aria-label="View résumé"><Download size={16} /></a>
+          <a href={profile.cvFile} download className="hidden size-11 place-items-center rounded-full border border-line text-muted transition hover:border-text hover:text-text sm:grid" aria-label="Download CV"><Download size={16} /></a>
           <a href="/contact/" className="hidden rounded-full bg-accent px-5 py-2.5 text-[14px] font-medium text-accent-ink transition hover:opacity-90 sm:inline-block">Hire me</a>
           <button onClick={() => setOpen(!open)} className="grid size-11 place-items-center rounded-full border border-line lg:hidden" aria-label="Menu" aria-expanded={open}>{open ? <X size={18} /> : <Menu size={18} />}</button>
         </div>

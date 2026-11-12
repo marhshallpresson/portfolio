@@ -17,6 +17,7 @@ export default function Resume() {
         <a href="/" className="inline-flex items-center gap-2 text-sm text-muted hover:text-text"><ArrowLeft size={14} /> Back to site</a>
         <div className="flex gap-2">
           <PrintButton />
+          <a href={profile.cvFile} download className="inline-flex items-center gap-2 rounded-full border border-line bg-surface px-4 py-2 text-sm"><Download size={14} /> PDF</a>
         </div>
       </div>
       <article className="mx-auto max-w-[840px] bg-surface px-7 py-10 text-[14px] leading-relaxed shadow-xl sm:rounded-2xl sm:px-12 print:max-w-none print:p-0 print:shadow-none">
